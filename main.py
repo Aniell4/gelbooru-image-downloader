@@ -26,7 +26,7 @@ async def main():
         image_url = str(image)
         filename = image_url.split("/")[-1]
 
-        r = await client.get(image_url)
+        r = await client.get(image_url, timeouts=None)
 
         if r.status_code == 200:
             

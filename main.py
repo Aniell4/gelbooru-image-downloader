@@ -9,9 +9,11 @@ except ImportError:
 
 try:
  import aiosonic
+ from aiosonic.timeout import Timeouts
 except ImportError:
  os.system('pip install aiosonic')
  import aiosonic
+ from aiosonic.timeout import Timeouts
 
 async def get_images(tag_list):
     gelbooru = Gelbooru('API_KEY', 'USER_ID')
@@ -26,7 +28,7 @@ async def main():
         image_url = str(image)
         filename = image_url.split("/")[-1]
 
-        r = await client.get(image_url, timeouts=None)
+        r = await client.get(image_url, timeouts=Timeouts(sock_read=1000,sock_connect=3))
 
         if r.status_code == 200:
             

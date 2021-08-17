@@ -1,4 +1,5 @@
 import os
+import asyncio
 
 try:
  from pygelbooru import Gelbooru
@@ -11,9 +12,6 @@ try:
 except ImportError:
  os.system('pip install aiosonic')
  import aiosonic
-
-import asyncio
-
 
 async def get_images(tag_list):
     gelbooru = Gelbooru('API_KEY', 'USER_ID')

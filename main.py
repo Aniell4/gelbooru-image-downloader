@@ -21,11 +21,9 @@ async def get_images(tag_list):
 async def main():
     tags = input("Enter Gelbooru Tags: ")
     tag_list = tags.split(' ')
-
-    result = await get_images(tag_list)
-
+   
     client = aiosonic.HTTPClient()
-    for image in result:
+    for image in await get_images(tag_list):
         image_url = str(image)
         filename = image_url.split("/")[-1]
 

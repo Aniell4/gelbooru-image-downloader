@@ -21,7 +21,7 @@ async def get_images(tag_list):
     return result
 
 async def main():
-    tags = input("Enter Gelbooru Tags:")
+    tags = input("Enter Gelbooru Tags: ")
     tag_list = tags.split(' ')
 
     result = await get_images(tag_list)

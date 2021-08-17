@@ -15,8 +15,7 @@ except ImportError:
 
 async def get_images(tag_list):
     gelbooru = Gelbooru('API_KEY', 'USER_ID')
-    result = await gelbooru.search_posts(tags=tag_list, limit = 1000)
-    return result
+    return await gelbooru.search_posts(tags=tag_list, limit = 1000)
 
 async def main():
     tags = input("Enter Gelbooru Tags: ")

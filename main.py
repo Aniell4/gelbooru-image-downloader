@@ -129,7 +129,12 @@ def index_posts(save_dir: str, file_tag_map: dict[str, list[str]], link_mode: st
             tag_dir = os.path.join(save_dir, tag)
             src_file = os.path.relpath(file, start=tag_dir)
             if not os.path.exists(tag_dir):
-                os.makedirs(tag_dir)
+                try:
+                    os.makedirs(tag_dir)
+                except Error:
+                    # ignore tags that have illegal characters for file names
+                    continue
+
                 tag_dir_file = os.path.join(tag_dir, os.path.basename(file))
                 if os.path.exists(tag_dir_file):
                     os.unlink(tag_dir_file)

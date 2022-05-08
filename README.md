@@ -1,5 +1,14 @@
 # gelbooru-image-downloader
-downloads images from selected tags using pygelbooru
 
-just edit main.py line 19 with your gelbooru API_KEY and USER_ID
-(you can find those at the bottom of https://gelbooru.com/index.php?page=account&s=options)
+Downloads images from selected tags using pygelbooru
+
+You will need to use your Gelbooru api key and user id which can be found at the below link  
+https://gelbooru.com/index.php?page=account&s=options
+
+For command line options, run `python main.py`
+
+## Required packages
+
+appdirs
+requests
+pygelbooru

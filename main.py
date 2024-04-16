@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import asyncio
 import json
@@ -22,6 +20,7 @@ def main():
     parser.add_argument('-o', '--output', default=os.curdir, help='The directory to save the downloaded posts to')
     parser.add_argument('-b', '--blacklist', nargs='*', help='Tags you do not want in the posts that will be downloaded')
     parser.add_argument('tags', nargs='+', help='Tags you want in the posts that will be downloaded')
+    parser.add_argument('-a', '--add-post-id', action='store_true', help='Add post ID to filenames') # if you need post-id
 
     args = parser.parse_args()
 
@@ -59,7 +58,7 @@ def main():
     if args.index_tags:
         index_posts(args.output, file_tag_map, args.index_tags)
 
-def download(api_key: str, user_id: str, save_dir: str, tags: list[str], blacklist_tags: list[str], num_images: int, save_tags: bool):
+def download(api_key: str, user_id: str, save_dir: str, tags: list[str], blacklist_tags: list[str], num_images: int, save_tags: bool, add_post_id: bool):
     if num_images <= 0:
         num_images = 1000
         all_images = True
@@ -85,7 +84,7 @@ def download(api_key: str, user_id: str, save_dir: str, tags: list[str], blackli
 
         for image in images:
             url = image.file_url
-            filename = image.filename
+            filename = f"{image.post_id}_{url.split('/')[-1]}" if add_post_id else url.split('/')[-1]
             total += 1
             if all_images:
                 print(f'[{total}] ', end='')

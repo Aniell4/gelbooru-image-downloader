@@ -20,7 +20,7 @@ def main():
     parser.add_argument('-o', '--output', default=os.curdir, help='The directory to save the downloaded posts to')
     parser.add_argument('-b', '--blacklist', nargs='*', help='Tags you do not want in the posts that will be downloaded')
     parser.add_argument('tags', nargs='+', help='Tags you want in the posts that will be downloaded')
-    parser.add_argument('-a', '--add-post-id', action='store_true', help='Add post ID to filenames') # if you need post-id
+    parser.add_argument('-a', '--add-post-id', action='store_true', help='Add post ID to filenames')
 
     args = parser.parse_args()
 
@@ -54,7 +54,7 @@ def main():
     if api_key is None or user_id is None:
         print('Missing credentials. You must specify both an api key and a user id or have them already saved')
 
-    file_tag_map = download(api_key, user_id, args.output, args.tags, args.blacklist, args.num_images, args.save_tags)
+    file_tag_map = download(api_key, user_id, args.output, args.tags, args.blacklist, args.num_images, args.save_tags, args.add_post_id)
     if args.index_tags:
         index_posts(args.output, file_tag_map, args.index_tags)
 
@@ -84,7 +84,10 @@ def download(api_key: str, user_id: str, save_dir: str, tags: list[str], blackli
 
         for image in images:
             url = image.file_url
-            filename = f"{image.post_id}_{url.split('/')[-1]}" if add_post_id else url.split('/')[-1]
+            filename = url.split('/')[-1]  # Default filename
+            if add_post_id:
+                filename = f"{image.id}_{filename}"
+            
             total += 1
             if all_images:
                 print(f'[{total}] ', end='')
